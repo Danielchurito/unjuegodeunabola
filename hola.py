@@ -1,26 +1,32 @@
 # Asegúrate de tener instalado pygame usando: pip install pygame
 import pygame
+import hola.constantes as constantes
 
 pygame.init()
 
 #colores
 
+# Asegúrate de tener instalado pygame usando: pip install pygame
+import hola.constantes as constantes
+
+pygame.init()
+
+# colores
 white = (255, 255, 255)
 black = (0, 0, 0)
 red = (255, 0, 0)
 green = (0, 255, 0)
 
-#tamaño de la pantalla
+# tamaño de la pantalla
 size = width, height = 400, 600
 screen = pygame.display.set_mode(size)
 pygame.display.set_caption("Solo Un Jueguito De Una Bola Rebotando")
 
-#posicion de la bola
+# posición de la bola
 x = 200 
 y = 200
 
-
-#velociad de la bola
+# velocidad de la bola
 velocidad = [4, 4]
 bola = pygame.Rect(x, y, 50, 50)
 platform = pygame.Rect(150, 500, 100, 20)
@@ -32,7 +38,7 @@ for i in range(8):  # 8 cubitos por fila
     cub.append(pygame.Rect(i * cub_width, 0, cub_width, cub_height))
     
 relog = pygame.time.Clock()
-
+   
 hola = True
 while hola:
 
@@ -46,7 +52,6 @@ while hola:
     if (keys[pygame.K_RIGHT] or keys[pygame.K_d]) and platform.right <= width: 
         platform.x += 5  
             
-
     bola.x += velocidad[0]
     bola.y += velocidad[1]
 
@@ -57,11 +62,11 @@ while hola:
         velocidad[1] = -velocidad[1]
     elif bola.bottom >= height:
         hola = False
-        
-        
+    
     if bola.colliderect(platform) and velocidad[1] > 0:
+        offset = (bola.centerx - platform.left) / platform.width
+        velocidad[0] = (offset - 0.5) * 10
         velocidad[1] = -velocidad[1]
-        
         
     for c in cub:
         if bola.colliderect(c):
